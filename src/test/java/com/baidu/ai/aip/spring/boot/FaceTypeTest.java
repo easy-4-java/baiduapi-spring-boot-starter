@@ -30,9 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FaceTypeTest {
 
     @Test
-    @DisplayName("Instance can be created via constructor")
-    void testInstantiation() {
-        FaceType instance = new FaceType();
-        assertThat(instance).isNotNull();
+    @DisplayName("Exposes supported values")
+    void exposesSupportedValues() {
+        assertThat(FaceType.values()).containsExactly(FaceType.LIVE, FaceType.IDCARD, FaceType.WATERMARK, FaceType.CERT);
+        assertThat(FaceType.valueOf("LIVE")).isSameAs(FaceType.LIVE);
     }
 }

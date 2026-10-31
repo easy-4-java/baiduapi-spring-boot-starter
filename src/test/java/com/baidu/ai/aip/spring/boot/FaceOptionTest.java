@@ -30,9 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FaceOptionTest {
 
     @Test
-    @DisplayName("Instance can be created via constructor")
-    void testInstantiation() {
-        FaceOption instance = new FaceOption();
-        assertThat(instance).isNotNull();
+    @DisplayName("Exposes supported values")
+    void exposesSupportedValues() {
+        assertThat(FaceOption.values()).containsExactly(FaceOption.COMMON, FaceOption.GATE);
+        assertThat(FaceOption.valueOf("COMMON")).isSameAs(FaceOption.COMMON);
     }
 }
