@@ -51,35 +51,31 @@ public class AuthClient {
 				+ "&client_secret=" + sk;
 		try {
 			URL realUrl = new URL(getAccessTokenUrl);
-			// 打开和URL之间的连接
-			HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
-			// 获取所有响应头字段
-			Map<String, List<String>> map = connection.getHeaderFields();
-			// 遍历所有的响应头字段
-			for (String key : map.keySet()) {
-				System.err.println(key + "--->" + map.get(key));
-			}
-			// 定义 BufferedReader输入流来读取URL的响应
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String result = "";
-			String line;
-			while ((line = in.readLine()) != null) {
-				result += line;
-			}
-			/**
-			 * 返回结果示例
-			 */
-			System.err.println("result:" + result);
-			JSONObject jsonObject = JSONObject.parseObject(result);
-			String access_token = jsonObject.getString("access_token");
-			return access_token;
+			return getAuth(realUrl);
 		} catch (Exception e) {
 			System.err.printf("获取token失败！");
 			e.printStackTrace(System.err);
 		}
 		return null;
+	}
+
+	static String getAuth(URL realUrl) throws Exception {
+		HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+		connection.setRequestMethod("GET");
+		connection.connect();
+		Map<String, List<String>> map = connection.getHeaderFields();
+		for (String key : map.keySet()) {
+			System.err.println(key + "--->" + map.get(key));
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		String result = "";
+		String line;
+		while ((line = in.readLine()) != null) {
+			result += line;
+		}
+		System.err.println("result:" + result);
+		JSONObject jsonObject = JSONObject.parseObject(result);
+		return jsonObject.getString("access_token");
 	}
 
 }
