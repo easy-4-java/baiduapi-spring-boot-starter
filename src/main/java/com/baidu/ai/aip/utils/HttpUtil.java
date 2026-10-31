@@ -37,7 +37,11 @@ public class HttpUtil {
 
     public static String postGeneralUrl(String generalUrl, String contentType, String params, String encoding)
             throws Exception {
-        URL url = new URL(generalUrl);
+        return postGeneralUrl(new URL(generalUrl), contentType, params, encoding);
+    }
+
+    static String postGeneralUrl(URL url, String contentType, String params, String encoding)
+            throws Exception {
         // 打开和URL之间的连接
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");

@@ -30,9 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FaceQualityTest {
 
     @Test
-    @DisplayName("Instance can be created via constructor")
-    void testInstantiation() {
-        FaceQuality instance = new FaceQuality();
-        assertThat(instance).isNotNull();
+    @DisplayName("Exposes supported values")
+    void exposesSupportedValues() {
+        assertThat(FaceQuality.values()).containsExactly(FaceQuality.NONE, FaceQuality.LOW, FaceQuality.NORMAL, FaceQuality.HIGH);
+        assertThat(FaceQuality.valueOf("NONE")).isSameAs(FaceQuality.NONE);
     }
 }
